@@ -1,0 +1,31 @@
+server:
+  #配置端口号，项目名
+  port: 8989
+  context-path: /lucene
+  #jsp页面热加载
+  jsp-servlet:
+    init-parameters:
+      development: true
+
+spring:
+  #视图解析器
+  mvc:
+    view:
+      suffix: .jsp
+      prefix: /
+  #设置post请求响应的字符编码集，解决中文乱码
+  http:
+    encoding:
+      charset: utf-8
+      force: true
+  #上传文件大小
+    multipart:
+      max-file-size: 10Mb
+      max-request-size: 100Mb
+  #设置动态代理实现方式为cglib，面向继承代理
+  aop:
+    proxy-target-class: true
+
+
+
+
