@@ -12,6 +12,7 @@ import org.apache.lucene.search.IndexSearcher;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.FSDirectory;
 import org.apache.lucene.util.Version;
+import org.wltea.analyzer.lucene.IKAnalyzer;
 
 import java.io.File;
 import java.io.IOException;
@@ -28,7 +29,7 @@ public class LuceneUtil {
     static {
         try {
             version = Version.LUCENE_44;
-            analyzer = new StandardAnalyzer(version);
+            analyzer = new IKAnalyzer();
             directory = FSDirectory.open(new File("e:/index"));
             config = new IndexWriterConfig(version, analyzer);
         } catch (Exception e) {
@@ -92,13 +93,13 @@ public class LuceneUtil {
 
     public static Document getDocFromPro(Product product) {
         Document document = new Document();
-        document.add(new IntField("id", product.getId(), Field.Store.YES));
-        document.add(new StringField("name", product.getName(), Field.Store.YES));
+        document.add(new StringField("id", product.getId(), Field.Store.YES));
+        document.add(new TextField("name", product.getName(), Field.Store.YES));
         document.add(new DoubleField("price", product.getPrice(), Field.Store.YES));
-        document.add(new StringField("content", product.getContent(), Field.Store.YES));
+        document.add(new TextField("content", product.getContent(), Field.Store.YES));
         document.add(new StringField("picture", product.getPicture(), Field.Store.YES));
         document.add(new StringField("status", product.getStatus(), Field.Store.YES));
-        document.add(new StringField("location", product.getLocation(), Field.Store.YES));
+        document.add(new TextField("location", product.getLocation(), Field.Store.YES));
         Date date = product.getCreateDate();
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
         String str = sdf.format(date);
@@ -115,7 +116,7 @@ public class LuceneUtil {
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        Product product = new Product(Integer.parseInt(document.get("id")), document.get("name"), Double.valueOf(document.get("price")),
+        Product product = new Product(document.get("id"), document.get("name"), Double.valueOf(document.get("price")),
                 document.get("content"),document.get("picture"),document.get("status"), date,document.get("location"));
         return product;
 

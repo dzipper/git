@@ -9,7 +9,7 @@
 
 
     <h1>添加商品</h1>
-    <form action="" method="post" enctype="multipart/form-data" >
+    <form action="${pageContext.request.contextPath}/addLucene" method="post" enctype="multipart/form-data" >
 		商品名称:<input type="text" name="name"><br/>
 		商品价格:<input type="text" name="price"><br/>
 		商品描述:<input type="text" name="content"><br/>

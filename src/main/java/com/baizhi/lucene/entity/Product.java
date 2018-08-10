@@ -8,7 +8,7 @@ import java.util.Date;
  * Created by SK on 2018/8/9.
  */
 public class Product {
-    private Integer id;
+    private String id;
     private String name;
     private double price;
     private String content;
@@ -21,7 +21,7 @@ public class Product {
     @Override
     public String toString() {
         return "Product{" +
-                "id=" + id +
+                "id='" + id + '\'' +
                 ", name='" + name + '\'' +
                 ", price=" + price +
                 ", content='" + content + '\'' +
@@ -32,11 +32,11 @@ public class Product {
                 '}';
     }
 
-    public Integer getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -100,7 +100,7 @@ public class Product {
 
     }
 
-    public Product(Integer id, String name, double price, String content, String picture, String status, Date createDate, String location) {
+    public Product(String id, String name, double price, String content, String picture, String status, Date createDate, String location) {
 
         this.id = id;
         this.name = name;

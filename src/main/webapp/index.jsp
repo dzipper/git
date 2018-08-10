@@ -150,9 +150,22 @@ body,button,input,select,textarea {
 <script type="text/javascript" src="./index_files/jquery.js"></script>
 <script type="text/javascript">
 	$(function(){
-	
-		
-		
+
+		$('#su').click(function(){
+			$.ajax({
+				url:'${pageContext.request.contextPath}/showLucene',
+				data:'str='+$('#kw').val(),
+				success:function(data){
+				    var str = "";
+				    $.each(data,function(index,product){
+				        console.log(product.picture)
+				        str+=product.name+'<br/>'+product.price+'<br/><img src="${pageContext.request.contextPath}/image/'+product.picture+'"/>'+'<br/><br/>'
+					})
+					var div = $('#ff');
+					div.html(str)
+				}
+			});
+		});
 	
 	})
 </script>
@@ -163,16 +176,18 @@ body,button,input,select,textarea {
 				<div id="lg" class="s-p-top">
 					<img id="s_lg_img" src="./index_files/logo.png">
 				</div>
-				<form id="form" action="" class="fm">
-					<input type="text" class="s_ipt" name="keyWords" id="kw" maxlength="100" autocomplete="off">
-					<input type="submit" value="搜索一下" id="su" class="btn self-btn bg s_btn">
+				<form id="form"  class="fm">
+					<input type="text" class="s_ipt" name="keyWords" id="kw" maxlength="100" autocomplete="off"/>
+					<input type="button" value="搜索一下" id="su" class="btn self-btn bg s_btn"/>
 				</form>
 			</div>
 		</div>
 	</div>
 
 	<hr >
-	<div id="ff"></div>
+	<div id="ff">
+
+	</div>
 	
 </body>
 </html>

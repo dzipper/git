@@ -9,11 +9,13 @@ import org.apache.lucene.search.IndexSearcher;
 import org.apache.lucene.search.ScoreDoc;
 import org.apache.lucene.search.TermQuery;
 import org.apache.lucene.search.TopDocs;
+import org.springframework.stereotype.Repository;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+@Repository
 public class LucenDaoImpl implements LuceneDao {
     @Override
     public void saveIndex(Product product) {
@@ -45,7 +47,7 @@ public class LucenDaoImpl implements LuceneDao {
         IndexWriter indexWriter = LuceneUtil.getIndexWriter();
         Document docFromPro = LuceneUtil.getDocFromPro(product);
         try {
-            indexWriter.updateDocument(new Term("id", product.getId()+""), docFromPro);
+            indexWriter.updateDocument(new Term("id", product.getId()), docFromPro);
             LuceneUtil.commit(indexWriter);
         } catch (IOException e) {
             LuceneUtil.rollback(indexWriter);
@@ -58,7 +60,7 @@ public class LucenDaoImpl implements LuceneDao {
         IndexSearcher indexSearcher = LuceneUtil.getIndexSearcher();
         List<Product> products = new ArrayList<>();
         try {
-            TopDocs topDocs = indexSearcher.search(new TermQuery(new Term("name", value)), 100);
+            TopDocs topDocs = indexSearcher.search(new TermQuery(new Term("name",value)), 100);
             ScoreDoc[] scoreDocs = topDocs.scoreDocs;
             for (int i = 0; i < scoreDocs.length; i++) {
                 ScoreDoc scoreDoc = scoreDocs[i];
